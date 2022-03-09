@@ -1,0 +1,32 @@
+[
+    {
+        "id": "123",
+        "name": "Elgato Camlink 4k",
+        "price": 1129,
+        "description": "Legger ut min Elgato Camlink 4K for salg, da den ikke brukes så veldig mye. <br> Prisen er satt og er ikke diskuterbar, får jeg ikke solgt den så beholder jeg den bare <br> Kan hentes i Trondheim eller på Frosta. (Kan evt sendes, hvis kjøper tar risikoen)",
+        "description_short": "Elgato Camlink selges, nesten ubrukt",
+        "images": [
+            "/images/Camlink_1.jpg",
+            "/images/Camlink_2.jpg",
+            "/images/Camlink_3.jpg",
+            "/images/Camlink_4.jpg",
+            "/images/Camlink_5.jpg",
+            "/images/Camlink_6.jpg"
+        ]
+    },
+    {
+        "id": "345",
+        "name": "Elgato Camlink 4k (V2)",
+        "price": 1590,
+        "description": "Legger ut min Elgato Camlink 4K for salg, da den ikke brukes så veldig mye. <br> Prisen er satt og er ikke diskuterbar, får jeg ikke solgt den så beholder jeg den bare <br> Kan hentes i Trondheim eller på Frosta. (Kan evt sendes, hvis kjøper tar risikoen)",
+        "description_short": "Elgato Camlink selges, nesten ubrukt",
+        "images": [
+            "/images/Camlink_1.jpg",
+            "/images/Camlink_2.jpg",
+            "/images/Camlink_3.jpg",
+            "/images/Camlink_4.jpg",
+            "/images/Camlink_5.jpg",
+            "/images/Camlink_6.jpg"
+        ]
+    }
+]
