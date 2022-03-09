@@ -12,13 +12,15 @@
             padding-bottom: 16px;
         }
     </style>
+        <script src="<%= view_checkout %>"></script>
+
 </head>
 <body>
     <div class="container">
         <div class="mt-5"></div>
         <div class="row justify-content-center">
             <div class="col-md-4 md-push-4">
-                <div id="checkin" class="checkin" style="height: auto; padding-bottom: 16px;"></div>
+                <div id="checkin" class="checkin"></div>
                 
             </div>
             <div class="col-md-4 md-push-4">
@@ -31,40 +33,73 @@
     <!--<div id="checkout-container"></div>-->
     <!-- Here you can specify your own javascript file -->
     
-    <script src="<%= view_checkout %>"></script>
     <script>
-        window.payex.hostedView.checkout({
-            container: {
-                checkin: "checkin",
-                paymentMenu: "paymentMenu",
-            },
-            culture: 'nb-No',
-            // If payer is identified
-            onPayerIdentified: function onPayerIdentified(payerIdentified) {
-                console.log(payerIdentified);
-                window.payex.hostedView.checkout({
+        runpayment()
+
+        async function runpayment() {
+            window.payex.hostedView.checkout({
+                container: {
+                    checkin: "checkin",
+                    paymentMenu: "paymentMenu",
+                },
+                culture: 'nb-No',
+
+                // If payer chooses "Not you?"
+                onPayerUnidentified: function onPayerUnidentified(payerUnidentified) {
+                    console.log(payerUnidentified);
+                },
+                onEventNotification: function onEventNotification(eventNotification) {
+                    console.log(eventNotification);
+                },
+
+                // If payer is identified
+                onPayerIdentified: async function onPayerIdentified(payerIdentified) {
+                    console.log(payerIdentified);
+                    console.log("LOGGED IN!")
+                    //console.log(document.getElementsByTagName('iframe')[0].style.height)
+
+                    window.payex.hostedView.checkout({
+                        container: {
+                            checkin: "checkin",
+                            paymentMenu: "paymentMenu",
+                        },
+                        culture: 'nb-No',
+                    }).open("paymentmenu");
+                },
+                
+            }).open("checkin");
+
+        }
+        
+
+        async function openPaymentMenu() {
+            //console.log((document.getElementsByTagName('iframe')[0].style.height).slice(0, -2))
+            if((document.getElementsByTagName('iframe')[0].style.height).slice(0, -2) > 400){
+                console.log("Open payment")
+                /*window.payex.hostedView.checkout({
                     container: {
                         checkin: "checkin",
                         paymentMenu: "paymentMenu",
                     },
                     culture: 'nb-No',
-                }).open("paymentmenu");
-            },
-            // If payer chooses "Not you?"
-            onPayerUnidentified: function onPayerUnidentified(payerUnidentified) {
-            console.log(payerUnidentified);
-            },
-            onEventNotification: function onEventNotification(eventNotification) {
-                console.log(eventNotification);
-            },
-        }).open("checkin");
-    </script>
-    <style>
-        iframe {
-            height: 1000px;
+                }).open("paymentmenu");*/
+            }else{
+                //console.log("Set interval")
+                //console.log((document.getElementsByTagName('iframe')[0].style.height).slice(0, -2))
+                await openPaymentMenu()
+                //setInterval(openPaymentMenu, 1000)
+                /*window.payex.hostedView.checkout({
+                    container: {
+                        checkin: "checkin",
+                        paymentMenu: "paymentMenu",
+                    },
+                    culture: 'nb-No',
+                }).open("paymentmenu");*/
+            }
+            
         }
-    </style>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>
 </html>
