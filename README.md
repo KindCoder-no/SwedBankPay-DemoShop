@@ -19,7 +19,7 @@ You can also change port and URL
 
 **Remember to change settings to fit your project**
 
-
+## Description
 When using the Node.JS and Express framework you can easily implement Swedbank Pay 
 
 You need two main components, backend and frontend. 
@@ -42,7 +42,7 @@ You need the axios npm package to run the API calls
 
 
 
-
+### Code
 Backend Code:
 server.js
 ````
