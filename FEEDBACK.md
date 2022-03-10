@@ -14,3 +14,5 @@
     - Vue
 - Examples for Callback 
     - Check if payment was succeded
+- Better view of request Body fields
+    - The arrows is a little bit confusing
