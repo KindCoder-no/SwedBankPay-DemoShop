@@ -24,7 +24,7 @@ The backend will call swedbank pay's API to get the order ID, and pass it to the
 In this example i use EJS as the view engine
 
 Backend Code:
-
+server.js
 ````
 app.get('/pay', function (req, res) {
 // Create the data to use in the API call
@@ -79,7 +79,7 @@ var data = {
     }
 }
 
-
+// Set config for API Call
 var config = {
     method: 'post',
     url: 'https://api.stage.payex.com/psp/paymentorders', // Remember to use the right API endpoint
@@ -90,19 +90,97 @@ var config = {
     data : data
     };
     
+    // Call API
     axios(config)
     .then(function (response) {
 
 
-    var operation = response.data.operations.find(function (o) {
-        // Return the view-checkout script href
-        return o.rel === 'view-checkout';
-    });
+        var operation = response.data.operations.find(function (o) {
+            // Return the view-checkout script href
+            return o.rel === 'view-checkout';
+        });
     
-    // Render the pay page using ejs
-    res.render('pay', {
-        view_checkout: operation.href
-    })
+        // Render the pay page using ejs
+        res.render('pay', {
+            view_checkout: operation.href
+        })
     })
           
-})````
+})
+````
+
+Frontend (Ejs)
+
+views/pay.ejs
+````
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay - DemoShop</title>
+   
+   <!-- Insert the script href you get from the backend -->
+    <script src="<%= view_checkout %>"></script>
+
+</head>
+<body>
+  
+    <div id="checkin" class="checkin"></div>
+             
+    <div id="paymentMenu"></div>
+    
+    <script>
+        // Run Payment function
+        runpayment()
+
+        // Create Payment function
+        async function runpayment() {
+            var identified = false
+            var resized = 0
+            window.payex.hostedView.checkout({
+                container: {
+                    checkin: "checkin",
+                    paymentMenu: "paymentMenu",
+                },
+                culture: 'nb-No',
+
+                
+
+                // If payer is identified
+                onPayerIdentified: async function onPayerIdentified(payerIdentified) {
+                    console.log(payerIdentified);
+
+                    // Open the payment menuu
+                    openPaymentMenu()
+                },
+
+                // If payer chooses "Not you?"
+                onPayerUnidentified: function onPayerUnidentified(payerUnidentified) {
+                    console.log(payerUnidentified);
+                },
+                onEventNotification: function onEventNotification(eventNotification) {
+                    console.log(eventNotification);
+                    
+                },
+                
+            }).open("checkin"); // Open Checkin 
+
+        }
+        
+        // Open Payment function
+        async function openPaymentMenu() {
+            
+            window.payex.hostedView.checkout({
+                container: {
+                    checkin: "checkin",
+                    paymentMenu: "paymentMenu",
+                },
+                culture: 'nb-No',
+            }).open("paymentmenu"); // Open payment menu
+            
+        }
+    </script>
+
+</body>
+</html>
