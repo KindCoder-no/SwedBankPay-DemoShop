@@ -31,6 +31,14 @@ In this example i use EJS as the view engine
 
 You need the axios npm package to run the API calls
 
+### Documentation/requirements
+- [Swedbank Pay Documentation](https://developer.swedbankpay.com/checkout-v3/starter/)
+- [Express Framework](https://expressjs.com/)
+- [Node.JS](https://nodejs.org/en/)
+
+- [Axios](https://www.npmjs.com/package/axios)
+- [EJS](https://ejs.co/)
+
 Backend Code:
 server.js
 ````
@@ -110,6 +118,7 @@ var config = {
     
         // Render the pay page using ejs
         res.render('pay', {
+            // Send the javascript href for view-checkout when rendering the page
             view_checkout: operation.href
         })
     })
