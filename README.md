@@ -28,6 +28,9 @@ The backend will call swedbank pay's API to get the order ID, and pass it to the
 
 In this example i use EJS as the view engine
 
+
+You need the axios npm package to run the API calls
+
 Backend Code:
 server.js
 ````
