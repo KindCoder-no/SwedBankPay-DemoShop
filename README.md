@@ -37,7 +37,7 @@ var data = {
     "paymentorder": {
         "operation": "Purchase",
         "currency": "NOK",
-        "amount": totalPrice + "00",
+        "amount": 1000,
         "vatAmount": 0,
         "description": "Test Purchase",
         "userAgent": "Mozilla/5.0...",
