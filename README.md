@@ -2,7 +2,7 @@
 A demoshop integrated with SwedBank Pay
 
 ## Requirements
-- Node.JS (https://nodejs.org/en/)
+- [Node.JS](https://nodejs.org/en/)
 
 ## Install
 Run ``npm install`` to install all required packages

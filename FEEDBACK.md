@@ -16,6 +16,6 @@
     - Check if payment was succeded
 - Better view of request Body fields
     - The arrows is a little bit confusing
-    
+
     ![Skjermbilde 2022-03-10 kl  10 10 30](https://user-images.githubusercontent.com/40148297/157628948-c1fbe146-2e54-4aa5-866f-8c913c681ef9.png)
     ![Skjermbilde 2022-03-10 kl  10 10 38](https://user-images.githubusercontent.com/40148297/157628973-96ff50d4-701e-4293-ad07-78f6d5270bed.png)
