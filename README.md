@@ -13,7 +13,10 @@ Remember to set payment credentlials in the ``.env`` file
 You can also change port and URL
 
 
-## Easy integration with Swedbank Pay
+# Easy integration with Swedbank Pay
+## This is a simplified script of the Demoshop
+* Remember to change settings to fit your project
+
 
 When using the Node.JS and Express framework you can easily implement Swedbank Pay 
 
@@ -184,3 +187,5 @@ views/pay.ejs
 
 </body>
 </html>
+
+````
