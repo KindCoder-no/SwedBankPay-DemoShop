@@ -37,6 +37,8 @@
         runpayment()
 
         async function runpayment() {
+            var identified = false
+            var resized = 0
             window.payex.hostedView.checkout({
                 container: {
                     checkin: "checkin",
@@ -44,27 +46,38 @@
                 },
                 culture: 'nb-No',
 
+                
+
+                // If payer is identified
+                onPayerIdentified: async function onPayerIdentified(payerIdentified) {
+                    console.log(payerIdentified);
+                    console.log("LOGGED IN!")
+                    identified = true
+                },
+
                 // If payer chooses "Not you?"
                 onPayerUnidentified: function onPayerUnidentified(payerUnidentified) {
                     console.log(payerUnidentified);
                 },
                 onEventNotification: function onEventNotification(eventNotification) {
                     console.log(eventNotification);
-                },
-
-                // If payer is identified
-                onPayerIdentified: async function onPayerIdentified(payerIdentified) {
-                    console.log(payerIdentified);
-                    console.log("LOGGED IN!")
-                    //console.log(document.getElementsByTagName('iframe')[0].style.height)
-
-                    window.payex.hostedView.checkout({
-                        container: {
-                            checkin: "checkin",
-                            paymentMenu: "paymentMenu",
-                        },
-                        culture: 'nb-No',
-                    }).open("paymentmenu");
+                    console.log(identified)
+                    if(eventNotification.sourceEvent === "OnCheckoutResized"){
+                        resized = resized + 1
+                        if(identified === true){
+                            console.log(resized)
+                            if(resized + 1 > 5){
+                                window.payex.hostedView.checkout({    
+                                    container: {
+                                        checkin: "checkin",
+                                        paymentMenu: "paymentMenu",
+                                    },
+                                    culture: 'nb-No',
+                                }).open("paymentmenu");
+                            }
+                            
+                        }
+                    }
                 },
                 
             }).open("checkin");
