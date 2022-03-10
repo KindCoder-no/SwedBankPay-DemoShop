@@ -67,13 +67,7 @@
                         if(identified === true){
                             console.log(resized)
                             if(resized + 1 > 5){
-                                window.payex.hostedView.checkout({    
-                                    container: {
-                                        checkin: "checkin",
-                                        paymentMenu: "paymentMenu",
-                                    },
-                                    culture: 'nb-No',
-                                }).open("paymentmenu");
+                                openPaymentMenu()
                             }
                             
                         }
@@ -86,29 +80,14 @@
         
 
         async function openPaymentMenu() {
-            //console.log((document.getElementsByTagName('iframe')[0].style.height).slice(0, -2))
-            if((document.getElementsByTagName('iframe')[0].style.height).slice(0, -2) > 400){
-                console.log("Open payment")
-                /*window.payex.hostedView.checkout({
-                    container: {
-                        checkin: "checkin",
-                        paymentMenu: "paymentMenu",
-                    },
-                    culture: 'nb-No',
-                }).open("paymentmenu");*/
-            }else{
-                //console.log("Set interval")
-                //console.log((document.getElementsByTagName('iframe')[0].style.height).slice(0, -2))
-                await openPaymentMenu()
-                //setInterval(openPaymentMenu, 1000)
-                /*window.payex.hostedView.checkout({
-                    container: {
-                        checkin: "checkin",
-                        paymentMenu: "paymentMenu",
-                    },
-                    culture: 'nb-No',
-                }).open("paymentmenu");*/
-            }
+            
+            window.payex.hostedView.checkout({
+                container: {
+                    checkin: "checkin",
+                    paymentMenu: "paymentMenu",
+                },
+                culture: 'nb-No',
+            }).open("paymentmenu");
             
         }
     </script>
