@@ -204,7 +204,7 @@ router.get('/pay', function (req, res) {
 
 
 // Payment success page
-router.get('/payment-complete', function (req, res) {
+router.get('/payment-complete', async function (req, res) {
     //var sessioncart = req.session.cart
     req.session.cart = undefined
 
@@ -216,6 +216,16 @@ router.get('/payment-complete', function (req, res) {
         var cartCount = sessioncart.length 
     }
 
+    var config1 = {
+        method: 'get',
+        url: process.env.PAYEE_API_ENDPOINT + req.cookies.payment_id + " ?$expand=payer",
+        headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': 'Bearer ' + process.env.PAYEETOKEN
+        }
+    };
+    var payerinfo = await axios(config1)
+    console.log(payerinfo.data.paymentOrder.payer)
     var config = {
         method: 'get',
         url: process.env.PAYEE_API_ENDPOINT + req.cookies.payment_id + "/orderitems",
@@ -227,10 +237,11 @@ router.get('/payment-complete', function (req, res) {
     
     axios(config)
     .then(function (response) {
-        console.log(response.data.orderItems.orderItemList)
+        //console.log(response.data.orderItems.orderItemList)
         res.render('payment-success', {
             cartCount,
-            items: response.data.orderItems.orderItemList
+            items: response.data.orderItems.orderItemList,
+            payerinfo: payerinfo.data.paymentOrder.payer
         })
     })
    

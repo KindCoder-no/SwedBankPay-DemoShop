@@ -18,7 +18,23 @@
         <div class="row justify-content-center">
             <div class="col-6">
                 <h1 class="text-center">Payment Complete!</h1>
-
+                <h3 class="text-center">Thanks for the purchase <%= payerinfo.name %>!</h3>
+                <div class="mt-5"></div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <h4>Shipping details</h4>
+                        <p>Address: <%= payerinfo.shippingAddress.addressee %> <%= payerinfo.shippingAddress.addressee %></p>
+                        <p>Street: <%= payerinfo.shippingAddress.streetAddress %></p>
+                        <p>Postal: <%= payerinfo.shippingAddress.city %> <%= payerinfo.shippingAddress.zipCode %></p>
+                    </div>
+                    <div class="col">
+                        <h4>Order details</h4>
+                        <p>Email: <%= payerinfo.email %></p>
+                        <p>Phone: <%= payerinfo.msisdn %></p>
+                        <p>IP: <%= payerinfo.device.ipAddress %> (<%= payerinfo.device.platformName %>)</p>
+                    </div>
+                </div>
+               
                 <div class="mt-5"></div>
                 <h3>Ordered Items:</h3>
                 <table class="table">
