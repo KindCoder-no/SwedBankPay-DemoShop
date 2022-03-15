@@ -225,7 +225,7 @@ router.get('/payment-complete', async function (req, res) {
         }
     };
     var payerinfo = await axios(config1)
-    console.log(payerinfo.data.paymentOrder.payer)
+    //console.log(payerinfo.data.paymentOrder.payer)
     var config = {
         method: 'get',
         url: process.env.PAYEE_API_ENDPOINT + req.cookies.payment_id + "/orderitems",
