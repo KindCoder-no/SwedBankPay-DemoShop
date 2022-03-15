@@ -12,7 +12,12 @@ Remember to set payment credentlials in the ``.env`` file
 
 You can also change port and URL
 
-````.env
+```
+.env
+```
+````
+
+
 PORT=5000
 URL=http://localhost
 
