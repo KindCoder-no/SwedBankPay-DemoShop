@@ -21,215 +21,179 @@ router.get('/pay', function (req, res) {
         var sessioncart = req.session.cart
         var products_id = []
 
+        if(process.env.PORT === 80){
+            var port = ""
+        }else{
+            var port = ":" + process.env.PORT
+        }
+
         products.forEach(data => {
             products_id.push(data.id)
         })
-    
+
+        var products_items = []
+
         var totalPrice = Number()
         sessioncart.forEach(data => { 
             var productindex = products_id.indexOf(data.id)
             var product = products[productindex]
             
             totalPrice += product.price * data.amount 
+
+            products_items.push({
+                "reference": product.id,
+                "name": product.name,
+                "type": "PRODUCT",
+                "class": "ProductGroup1",
+                "itemUrl": process.env.URL + port + "/product/" + product.id,
+                "imageUrl": product.images[0],
+                "description": product.description_short,
+                "discountDescription": "Volume discount",
+                "quantity": data.amount,
+                "quantityUnit": "pcs",
+                "unitPrice": product.price + "00",
+                "discountPrice": 0,
+                //"vatPercent": 2500,
+                "amount": product.price * data.amount + "00",
+                //"vatAmount": 375
+            })
         })
     
-    
-        var data = {
-                "paymentorder": {
-            
-                    "operation": "Purchase",
-            
-                    "currency": "SEK",
-            
-                    "amount": totalPrice + "00",
-            
-                    "vatAmount": 0,
-            
-                    "description": "TEST",
-            
-                    "userAgent": "Mozilla/5.0",
-            
-                    "language": "nb-NO",
-            
-                    "productName": "Checkout3",
-            
-                    "disablePaymentMenu": false,
-            
-                    "urls": {
-            
-                        "hostUrls": [
-            
-                            "http://localhost:3000"
-            
-                        ],
-            
-                        "completeUrl": "http://localhost:3000/payment-complete",
-            
-                        "cancelUrl": "http://localhost:3000",
-            
-                        "paymentUrl": "http://localhost:3000/pay",
-            
-                        "callbackUrl": "http://localhost:3000",
-            
-                        "termsOfServiceUrl": "https://localhost:3000",
-            
-                        //"logoUrl": "https://localhost:3000"
-            
-                    },
-            
-                    "payeeInfo": {
-            
-                        "payeeId": process.env.PAYEEID,
-            
-                        "payeeReference": Date.now(),
-            
-                        "payeeName": "Emre Inc",
-            
-                        "productCategory": "A1"
-            
-                    },
-            
-                    "payer": {
-            
-                        //"consumerProfileRef": "{{consumerProfileRef}}"
-            
-                        // "nationalIdentifier": {
-            
-                        //     "countryCode": "SE",
-            
-                        //     "socialSecurityNumber": "971020-2392"
-            
-                        // }
-            
-                    }
-            
-                }
-            
-            
-            
-             
-        }
-
-        if(process.env.PORT === 80){
-            var port = ""
+        if(totalPrice === 0){
+            res.redirect('/cart')
         }else{
-            var port = ":" + process.env.PORT
-        }
-        var newdata = {
-            "paymentorder": {
-                "operation": "Purchase",
-                "currency": "NOK",
-                "amount": totalPrice + "00",
-                "vatAmount": 0,
-                "description": "Test Purchase",
-                "userAgent": "Mozilla/5.0...",
-                "language": "nb-NO",
-                "productName": "Checkout3",
-                "urls": {
-                    "hostUrls": [ process.env.URL + port, ],
-                    "paymentUrl": process.env.URL + port + "/pay",
-                    "completeUrl": process.env.URL + port + "/payment-complete",
-                    "cancelUrl": process.env.URL + port + "/payment-cancelled",
-                    //"callbackUrl": process.env.URL + port + "https://api.example.com/payment-callback",
-                    //"termsOfServiceUrl": "https://example.com/termsandconditions.pdf"
-                },
-                "payeeInfo": {
-                    "payeeId": process.env.PAYEEID,
-                    "payeeReference": Date.now(),
-                    "payeeName": "Emre INC",
-                    "productCategory": "A123",
-                    "orderReference": Date.now(),
-                    "subsite": "MySubsite"
-                },
-                "payer": {
-                    "requireConsumerInfo": true,
-                    "digitalProducts": false,
-                    "shippingAddressRestrictedToCountryCodes": [ "NO", "US" ]
-                },
-                /*"orderItems": [
-                    {
-                        "reference": "P1",
-                        "name": "Product1",
-                        "type": "PRODUCT",
-                        "class": "ProductGroup1",
-                        "itemUrl": "https://example.com/products/123",
-                        "imageUrl": "https://example.com/product123.jpg",
-                        "description": "Product 1 description",
-                        "discountDescription": "Volume discount",
-                        "quantity": 5,
-                        "quantityUnit": "pcs",
-                        "unitPrice": 300,
-                        "discountPrice": 0,
-                        "vatPercent": 2500,
-                        "amount": 1500,
-                        "vatAmount": 375
+            
+ 
+            
+
+
+
+            /*sessioncart.forEach(data => {
+                var productindex = products_id.indexOf(data.id)
+                var product = products[productindex]
+                
+            })*/
+
+            console.log(products_items)
+
+            var newdata = {
+                "paymentorder": {
+                    "operation": "Purchase",
+                    "currency": "NOK",
+                    "amount": totalPrice + "00",
+                    "vatAmount": 0,
+                    "description": "Test Purchase",
+                    "userAgent": "Mozilla/5.0...",
+                    "language": "nb-NO",
+                    "productName": "Checkout3",
+                    "urls": {
+                        "hostUrls": [ process.env.URL + port, ],
+                        "paymentUrl": process.env.URL + port + "/pay",
+                        "completeUrl": process.env.URL + port + "/payment-complete",
+                        "cancelUrl": process.env.URL + port + "/payment-cancelled",
+                        //"callbackUrl": process.env.URL + port + "https://api.example.com/payment-callback",
+                        //"termsOfServiceUrl": "https://example.com/termsandconditions.pdf"
                     },
-                    {
-                        "reference": "I1",
-                        "name": "InvoiceFee",
-                        "type": "PAYMENT_FEE",
-                        "class": "Fees",
-                        "description": "Fee for paying with Invoice",
-                        "quantity": 1,
-                        "quantityUnit": "pcs",
-                        "unitPrice": 1900,
-                        "vatPercent": 0,
-                        "amount": 1900,
-                        "vatAmount": 0,
-                        "restrictedToInstruments": [
-                            "Invoice-PayExFinancingSe"
-                        ]
-                    }
-                ],*/
-                "riskIndicator": {
-                    "deliveryEmailAddress": "olivia.nyhuus@payex.com",
-                    "deliveryTimeFrameIndicator": "01",
-                    "preOrderDate": "19801231",
-                    "preOrderPurchaseIndicator": "01",
-                    "shipIndicator": "01",
-                    "giftCardPurchase": false,
-                    "reOrderPurchaseIndicator": "01",
-                    "pickUpAddress": {
-                        "name": "Olivia Nyhus",
-                        "streetAddress": "Saltnestoppen 43",
-                        "coAddress": "",
-                        "city": "Saltnes",
-                        "zipCode": "1642",
-                        "countryCode": "NO"
+                    "payeeInfo": {
+                        "payeeId": process.env.PAYEEID,
+                        "payeeReference": Date.now(),
+                        "payeeName": "Emre INC",
+                        "productCategory": "A123",
+                        "orderReference": Date.now(),
+                        "subsite": "MySubsite"
+                    },
+                    "payer": {
+                        "requireConsumerInfo": true,
+                        "digitalProducts": false,
+                        "shippingAddressRestrictedToCountryCodes": [ "NO", "US" ]
+                    },
+                    "orderItems": products_items /*[
+                        {
+                            "reference": "P1",
+                            "name": "Product1",
+                            "type": "PRODUCT",
+                            "class": "ProductGroup1",
+                            "itemUrl": "https://example.com/products/123",
+                            "imageUrl": "https://example.com/product123.jpg",
+                            "description": "Product 1 description",
+                            "discountDescription": "Volume discount",
+                            "quantity": 5,
+                            "quantityUnit": "pcs",
+                            "unitPrice": 300,
+                            "discountPrice": 0,
+                            "vatPercent": 2500,
+                            "amount": 1500,
+                            "vatAmount": 375
+                        },
+                        {
+                            "reference": "I1",
+                            "name": "InvoiceFee",
+                            "type": "PAYMENT_FEE",
+                            "class": "Fees",
+                            "description": "Fee for paying with Invoice",
+                            "quantity": 1,
+                            "quantityUnit": "pcs",
+                            "unitPrice": 1900,
+                            "vatPercent": 0,
+                            "amount": 1900,
+                            "vatAmount": 0,
+                            "restrictedToInstruments": [
+                                "Invoice-PayExFinancingSe"
+                            ]
+                        }
+                    ]*/,
+                    "riskIndicator": {
+                        "deliveryEmailAddress": "olivia.nyhuus@payex.com",
+                        "deliveryTimeFrameIndicator": "01",
+                        "preOrderDate": "19801231",
+                        "preOrderPurchaseIndicator": "01",
+                        "shipIndicator": "01",
+                        "giftCardPurchase": false,
+                        "reOrderPurchaseIndicator": "01",
+                        "pickUpAddress": {
+                            "name": "Olivia Nyhus",
+                            "streetAddress": "Saltnestoppen 43",
+                            "coAddress": "",
+                            "city": "Saltnes",
+                            "zipCode": "1642",
+                            "countryCode": "NO"
+                        }
                     }
                 }
             }
-        }
-    
-    
-        var config = {
-            method: 'post',
-            url: process.env.PAYEE_API_ENDPOINT + '/psp/paymentorders',
-            headers: { 
-              'Content-Type': 'application/json', 
-              'Authorization': 'Bearer ' + process.env.PAYEETOKEN
-            },
-            data : newdata
-          };
-          
-          axios(config)
-          .then(function (response) {
-            //console.log(response.data.operations);
-    
-    
-            var operation = response.data.operations.find(function (o) {
-                return o.rel === 'view-checkout';
-                //return o.rel === "redirect-checkout";
-            });
+        
+        
+            var config = {
+                method: 'post',
+                url: process.env.PAYEE_API_ENDPOINT + '/psp/paymentorders',
+                headers: { 
+                'Content-Type': 'application/json', 
+                'Authorization': 'Bearer ' + process.env.PAYEETOKEN
+                },
+                data : newdata
+            };
             
-            //console.log(operation)
-            //res.redirect(operation.href)
-            //res.send(totalPrice)
-            //res.send("Hei")
-            res.render('pay', {
-                view_checkout: operation.href
+            axios(config)
+            .then(function (response) {
+                //console.log(response.data.operations);
+        
+        
+                var operation = response.data.operations.find(function (o) {
+                    return o.rel === 'view-checkout';
+                    //return o.rel === "redirect-checkout";
+                });
+                
+                //console.log(operation)
+                //res.redirect(operation.href)
+                //res.send(totalPrice)
+                //res.send("Hei")
+                res.render('pay', {
+                    view_checkout: operation.href,
+                    payment_id: response.data.paymentOrder.id,
+                })
             })
-          })
+        }
+        
           
     }else{
         res.redirect('/')
@@ -251,9 +215,25 @@ router.get('/payment-complete', function (req, res) {
     }else{
         var cartCount = sessioncart.length 
     }
-    res.render('payment-success', {
-        cartCount
+
+    var config = {
+        method: 'get',
+        url: process.env.PAYEE_API_ENDPOINT + req.cookies.payment_id + "/orderitems",
+        headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': 'Bearer ' + process.env.PAYEETOKEN
+        }
+    };
+    
+    axios(config)
+    .then(function (response) {
+        console.log(response.data.orderItems.orderItemList)
+        res.render('payment-success', {
+            cartCount,
+            items: response.data.orderItems.orderItemList
+        })
     })
+   
 })
 
 module.exports = router;
