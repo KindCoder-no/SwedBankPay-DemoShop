@@ -12,6 +12,14 @@ Remember to set payment credentlials in the ``.env`` file
 
 You can also change port and URL
 
+````.env
+PORT=5000
+URL=http://localhost
+
+PAYEE_API_ENDPOINT=
+PAYEETOKEN=
+PAYEEID=
+````
 
 # Easy integration with Swedbank Pay
 
