@@ -33,7 +33,7 @@
                     <div class="steps-number">3</div>Step three
                 </li>
                 <li id="step4" >
-                    <div class="steps-number">4</div>Step four
+                    <div class="material-icons steps-icon">check</div>Finished
                 </li>
             </ol>
             <div class="steps-responsive">
@@ -48,9 +48,10 @@
                     <label for="init-value-datepicker">Select Shipment date</label>
                     <div class="input-group">
                         <span class="input-group-addon "><i class="material-icons material-icons-outlined" aria-hidden="true">event</i></span>
-                        <input id="date" type="text" id="init-value-datepicker" class="form-control" data-datepicker data-datepicker-value="new Date()" data-datepicker-fulldate="true" />
+                        <input id="date" type="text" id="init-value-datepicker" class="form-control" data-datepicker data-datepicker-value="2022-03-15" data-datepicker-fulldate="true" required/>
                     </div>
-                    <button onclick="checkdate()" class="btn btn-primary" type="button">Submit</button>
+                    <br>
+                    <button id="checkdata_submit" onclick="checkdate()" class="btn btn-primary" type="button">Submit</button>
 
                 </div>
             </div>
@@ -82,6 +83,7 @@
             <div class="steps-sub-title">Date Range</div>`;
             document.getElementById("step2").className = "steps-ongoing steps-selected";
             document.getElementById("checkin_class").className = "col-md-6 md-push-6";
+            document.getElementById("checkdata_submit").style.display = "none"
             runpayment()
         }
 
