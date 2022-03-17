@@ -3,6 +3,7 @@
 ## Usage
 - The Documentation seems a little frustration and not that easy to understand what to do.
     - A lot of info/input fields that takes up a lot of space, and the users may scroll pass it and other important documentation
+    - The checkout v3 example does not work when just copy pasting and replacing merchant credentials
 
 
 
