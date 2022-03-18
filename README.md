@@ -1,5 +1,9 @@
 # SwedBankPay-DemoShop
 A demoshop integrated with SwedBank Pay
+### Jump to:
+[Custom integration](#easy-integration-with-swedbank-pay)
+
+[Images](#images)
 
 ## Requirements
 - [Node.JS](https://nodejs.org/en/)
@@ -42,6 +46,7 @@ You need the axios npm package to run the API calls
 
 ### Documentation/requirements
 - [Swedbank Pay Documentation](https://developer.swedbankpay.com/checkout-v3/starter/)
+- [Api Call Request Body Documentation](https://developer.swedbankpay.com/checkout-v3/starter/seamless-view#step-1-create-payment-order-and-checkin)
 - [Express Framework](https://expressjs.com/)
 - [Node.JS](https://nodejs.org/en/)
 
@@ -218,18 +223,32 @@ views/pay.ejs
 ````
 
 # Images
-
+### Homepage
 ![Skjermbilde 2022-03-18 kl  08 57 32](https://user-images.githubusercontent.com/40148297/158960388-c3d00c63-99b5-42f7-8288-754f8c9e4d78.png)
 
+### Products Page
 ![Skjermbilde 2022-03-18 kl  08 57 46](https://user-images.githubusercontent.com/40148297/158960413-955699da-885d-45ca-a3e2-90727c001b4e.png)
 
+### Cart
 ![Skjermbilde 2022-03-18 kl  08 58 25](https://user-images.githubusercontent.com/40148297/158960524-f6b43234-0931-4e29-b988-19b891c6f8c5.png)
 
-### Payment 
+## Payment Flow
+
+### Select shippment date
+In this example you need to select shippment date for your order
+
 ![Skjermbilde 2022-03-18 kl  08 58 52](https://user-images.githubusercontent.com/40148297/158960560-2bbaa063-8c19-4fc3-ab2a-789aef6bf007.png)
 
+### Payer identification
+The Payer puts in his/hers email and phone number
+
 ![Skjermbilde 2022-03-18 kl  08 59 20](https://user-images.githubusercontent.com/40148297/158960624-5823c247-c761-4640-8fed-be7c4889c3b7.png)
+### Payment menu
+The payment menu is opened and the payer selects their prefered payment method
 
 ![Skjermbilde 2022-03-18 kl  08 59 44](https://user-images.githubusercontent.com/40148297/158960627-0b676052-3cdd-4f9c-ac48-47946832053c.png)
+
+### Payment Complete
+The payment is completed and you can se the payment information
 
 ![Skjermbilde 2022-03-18 kl  09 00 15](https://user-images.githubusercontent.com/40148297/158960631-1ef2c68b-c65e-4607-b1a8-bd6e89718d06.png)
